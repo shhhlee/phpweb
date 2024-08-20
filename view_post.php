@@ -56,10 +56,12 @@ ini_set("display_errors", 1);
                 echo "<div class='content'>" . $row["content"] . "</div>"; // 여기에 실제 내용 표시
                 echo "<hr>";
 
-                // 파일 다운로드 링크 추가
                 if ($row['file_path']) {
-                    $file_name = basename($row['file_path']); // 파일명 추출
-                    echo "<div class='file-download'>첨부파일 : <a href='" . $row['file_path'] . "' download>" . htmlspecialchars($file_name) . "</a></div>";
+                    $file_name_with_prefix = basename($row['file_path']); // 전체 파일명 추출
+                    $file_name_parts = explode('_', $file_name_with_prefix); // 언더스코어로 분리
+                    $actual_file_name = array_pop($file_name_parts); // 마지막 부분이 실제 파일 이름
+                
+                    echo "<div class='file-download'>첨부파일 : <a href='" . $row['file_path'] . "' download>" . htmlspecialchars($actual_file_name) . "</a></div>";
                 }
                 
                 echo "<div class='button-container'>";

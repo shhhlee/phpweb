@@ -59,7 +59,9 @@ if ($row['id'] == $user_name) {
             mkdir($upload_dir, 0777, true);
         }
 
-        $file_dest_path = $upload_dir . $file_name;
+        // 파일 이름을 고유하게 만듦
+        $unique_name = time() . '_' . uniqid() . '_' . $file_name;
+        $file_dest_path = $upload_dir . $unique_name;
 
         if (move_uploaded_file($file_tmp_path, $file_dest_path)) {
             $file_path = $file_dest_path; // 새 파일 경로 저장

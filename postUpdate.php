@@ -52,12 +52,18 @@
             <label for="content">내용</label><br>
             <textarea name="content" required><?php echo $row['content']; ?></textarea><br>
 
-            <?php if ($row['file_path']) { ?>
+            <?php if ($row['file_path']) { 
+                // 전체 파일명에서 실제 파일명만 추출
+                $file_name_with_prefix = basename($row['file_path']); // 전체 파일명 추출
+                $file_name_parts = explode('_', $file_name_with_prefix); // 언더스코어로 분리
+                $actual_file_name = array_pop($file_name_parts); // 마지막 부분이 실제 파일 이름
+            ?>
                 <label for="existing_file">첨부된 파일: </label><br>
-                <a href="<?php echo $row['file_path']; ?>" download><?php echo basename($row['file_path']); ?></a><br><br>
+                <a href="<?php echo $row['file_path']; ?>" download><?php echo htmlspecialchars($actual_file_name); ?></a><br><br>
 
                 <input type="checkbox" name="delete_file" value="1"> 기존 파일 삭제<br><br>
             <?php } ?>
+
 
             <label for="file">새로운 파일 업로드</label><br>
             <input type="file" name="file"><br><br>

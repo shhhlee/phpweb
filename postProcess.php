@@ -39,7 +39,9 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == UPLOAD_ERR_OK) {
         mkdir($upload_dir, 0777, true);
     }
 
-    $file_dest_path = $upload_dir . $file_name;
+    // 파일 이름을 고유하게 만듦
+    $unique_name = time() . '_' . uniqid() . '_' . $file_name;
+    $file_dest_path = $upload_dir . $unique_name;
 
     // 파일을 서버에 저장
     if (move_uploaded_file($file_tmp_path, $file_dest_path)) {
